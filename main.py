@@ -4,10 +4,6 @@ import matplotlib.pyplot as plt
 import pandas as pd
 from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error, r2_score
-path = "./assets/Age_And_Time.csv"
-ageAndTimeDf = pd.read_csv(path)
-path = "./assets/countries.csv"
-countriesDf = pd.read_csv(path)
 path = "./assets/heights.csv"
 heightsDf = pd.read_csv(path)
 
@@ -21,15 +17,14 @@ plt.scatter(heights, weights)
 items = [(heights[i], weights[i]) for i in range(len(heights))]
 sortedHeights = sorted(items, key=lambda item: item[0])
 lindex = (len(sortedHeights)//6)
-rindex = (len(sortedHeights)//6)*5
+rindex = math.ceil((len(sortedHeights)/6)*5)-1
 Xl = sortedHeights[lindex][0]
 Xr = sortedHeights[rindex][0]
 Yl=np.median([sortedHeights[i][1] for i in range(len(sortedHeights)//3)])
-Yr=np.median([sortedHeights[i][1] for i in range((len(sortedHeights)//3)*2, len(sortedHeights))])
+Yr=np.median([sortedHeights[i][1] for i in range(math.ceil(len(sortedHeights)/3*2), len(sortedHeights))])
 Brl = (Yr-Yl)/(Xr-Xl)
 allRs= [sortedHeights[i][1]-Brl*sortedHeights[i][0] for i in range(len(sortedHeights))]
 Arl = np.median(allRs)
-
 x = np.linspace(50,250,100)
 y = x*Brl+Arl
 plt.plot(x, y, '-r', label='resistant')
@@ -40,6 +35,7 @@ Bls=(np.cov(weights, heights, ddof=0)[0][1])/np.var(heights)
 Als = np.mean(weights)-Bls*np.mean(heights)
 x = np.linspace(50,250,100)
 y = x*Bls+Als
+
 plt.plot(x, y, '-b', label='sum of squares')
 
 

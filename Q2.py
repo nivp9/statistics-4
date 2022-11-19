@@ -37,6 +37,7 @@ r=calcR(x,newY)
 print(r)
 print(calcB(x,newY,r))
 
+#f
 noises=np.linspace(0.5,10,100)
 rVector=[]
 bVector = []

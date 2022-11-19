@@ -6,16 +6,25 @@ import scipy.stats
 from sklearn import datasets, linear_model
 from sklearn.metrics import mean_squared_error, r2_score
 
-path = "./assets/Age_And_Time.csv"
+path = "./assets/Age_And_Time1.csv"
 ageAndTimeDf = pd.read_csv(path)
 path = "./assets/countries.csv"
 countriesDf = pd.read_csv(path)
 age = ageAndTimeDf["Age"]
 time = ageAndTimeDf["Time"]
+#a
 
 plt.scatter(age,time)
+ageMean=np.mean(age)
+timeMean=np.mean(time)
+cov=sum([(age[i]-ageMean)*(time[i]-timeMean) for i in range(len(age))])/len(age)
+var = sum((age-ageMean)**2)/len(age)
+print("niv", cov/var)
+print(((np.cov(age, time, ddof=0)[0][1])/(np.std(age, ddof=0)*np.std(time, ddof=0)))*100)
 
-Bls=(np.cov(age, time, ddof=0)[0][1])/np.var(age)
+
+Bls=(np.cov(age, time, ddof=0)[0][1])/np.var(age, ddof=0)
+print(Bls)
 x = np.linspace(0,35,100)
 y = x*Bls
 plt.plot(x, y, '-r')
